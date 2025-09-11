@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import AccountRow from './components/AccountRow.vue';
+import AccountRows from './components/AccountRows.vue';
 </script>
 
 <template>
-  <account-row/>
+  <account-rows/>
+
 </template>
 
 <style scoped>
