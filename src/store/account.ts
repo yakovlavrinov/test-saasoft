@@ -3,7 +3,11 @@ import { ref } from "vue";
 import type { Account } from "../types/account";
 
 export const useAccountStore = defineStore("accounts", () => {
-  const accounts = ref<Account[]>([]);
+  const accounts = ref<Account[]>(JSON.parse(localStorage.getItem("accounts") || "[]"));
+
+  const saveToStorage = () => {
+    localStorage.setItem("accounts", JSON.stringify(accounts.value));
+  }
 
   const addAccount = () => {
     accounts.value.push({
@@ -13,17 +17,20 @@ export const useAccountStore = defineStore("accounts", () => {
       login: "",
       password: "",
     });
+    saveToStorage()
   };
 
   const removeAccount = (id: string) => {
     accounts.value = accounts.value.filter((acc) => acc.id !== id);
+    saveToStorage()
   };
 
-  function updateAccount(updated: Account) {
+  const updateAccount = (updated: Account) => {
     const idx = accounts.value.findIndex(acc => acc.id === updated.id);
     if (idx !== -1) {
       accounts.value[idx] = updated;
     }
+    saveToStorage()
   }
 
   return { accounts, addAccount, removeAccount, updateAccount  }
