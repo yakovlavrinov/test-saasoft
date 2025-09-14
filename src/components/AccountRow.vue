@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAccountStore } from "../store/account";
-import type { Account, AccountType } from "../types/account";
+import type { Account, AccountType, Errors } from "../types/account";
 
 const props = defineProps<{ account: Account }>();
 const store = useAccountStore();
@@ -9,12 +9,6 @@ const store = useAccountStore();
 const local = ref({ ...props.account });
 const localLabels = ref(local.value.labels.map((l) => l.text).join("; "));
 
-type Errors = {
-  labels?: string;
-  type?: string;
-  login?: string;
-  password?: string;
-};
 const errors = ref<Errors>({});
 
 const validate = (): boolean => {
@@ -120,8 +114,8 @@ const onRemove = () => {
       >
         <n-input
           :value="local.login"
-          placeholder="Логин"
           @update:value="onChangeLogin"
+          placeholder="Логин"
           @blur="trySave"
           :class="{ 'full-width': local.type !== 'Локальная' }"
         />
@@ -135,8 +129,8 @@ const onRemove = () => {
         <n-input
           type="password"
           :value="local.password || ''"
-          placeholder="Пароль"
           @update:value="onChangePassword"
+          placeholder="Пароль"
           @blur="trySave"
         />
       </n-form-item>

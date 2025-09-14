@@ -6,5 +6,11 @@ export interface Account {
   type: AccountType;
   login: string;
   password: string | null;
-  
 }
+
+export type Errors = {
+  labels?: string;
+  type?: string;
+  login?: string;
+  password?: string;
+};
