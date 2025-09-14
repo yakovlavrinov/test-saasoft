@@ -19,5 +19,12 @@ export const useAccountStore = defineStore("accounts", () => {
     accounts.value = accounts.value.filter((acc) => acc.id !== id);
   };
 
-  return { accounts, addAccount, removeAccount }
+  function updateAccount(updated: Account) {
+    const idx = accounts.value.findIndex(acc => acc.id === updated.id);
+    if (idx !== -1) {
+      accounts.value[idx] = updated;
+    }
+  }
+
+  return { accounts, addAccount, removeAccount, updateAccount  }
 });
